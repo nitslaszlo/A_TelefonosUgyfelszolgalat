@@ -11,6 +11,7 @@ export class Content {
         res.write("Megint");
         res.write("Hol iratkozok ki");
         res.write("az");
+        res.write("Még mindig jó? -M.Á.");
         res.end();
     }
 }
