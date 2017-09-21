@@ -3,7 +3,7 @@ feladatának megoldása Visual Studio Code fejlesztői környezettel, TypeScript
 mivel fájlokat kell írni-olvasni.
 A csoport tagja:
 - Szűcs Dávid (szucshey)
-- XY2
+- Matola István (Dragon986)
 - Menczigár Áron (menczi)
 
 VS Code + TypeScript + Node.js + Git
