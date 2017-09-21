@@ -10,6 +10,7 @@ export class Content {
         res.write("Dragon voltam~");
         res.write("Megint");
         res.write("Hol iratkozok ki");
+        res.write("az");
         res.end();
     }
 }
