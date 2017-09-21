@@ -1,3 +1,4 @@
+Nits Lászó
 0. Why to use GIT (version control system)
 https://www.youtube.com/watch?v=DqtZUvmPmo4&index=1&list=PLhW3qG5bs-L8OlICbNX9u4MZ3rAt5c5GG
 
