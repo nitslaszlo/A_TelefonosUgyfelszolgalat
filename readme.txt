@@ -4,7 +4,7 @@ mivel fájlokat kell írni-olvasni.
 A csoport tagja:
 Menczigár Áron (menczi)
 Szűcs Dávid (szucshey)
-
+Matola István (Dragon986)
 
 VS Code + TypeScript + Node.js + Git
 =====================================
