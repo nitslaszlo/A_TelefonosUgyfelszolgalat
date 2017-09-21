@@ -1,5 +1,6 @@
 ﻿import * as http from "http";
 import { Content } from "./Content";
+import { Hivas } from "./hivas";
 
 class Program {
     constructor() {
