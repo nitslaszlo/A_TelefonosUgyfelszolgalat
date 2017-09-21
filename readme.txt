@@ -2,7 +2,7 @@
 feladatának megoldása Visual Studio Code fejlesztői környezettel, TypeScript nyelven Node.js-el a szerver oldalon,
 mivel fájlokat kell írni-olvasni.
 A csoport tagja:
-- XY1
+- Szűcs Dávid
 - XY2
 - XY3
 
