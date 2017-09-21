@@ -9,6 +9,7 @@ export class Content {
         res.write("<p>Hello TypeScript!!!</p>");
         res.write("Dragon voltam~");
         res.write("Megint");
+        res.write("Hol iratkozok ki");
         res.end();
     }
 }
