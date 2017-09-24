@@ -16,8 +16,8 @@ export class Hivas {
       this.v_perc = parseInt(m[4]);
       this.v_mperc = parseInt(m[5]);
    }
-   get ora(): number { 
+   get ora(): number {
       return this.k_ora;
    }
 }
-}
+
