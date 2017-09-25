@@ -19,9 +19,20 @@ export class Content {
             if (i.length > 0) h.push(new Hivas(i));
         });
         const hivasdarab: number[] = [];
+        let max: number[] = [0,0];
+        let kul: number = 0;
          h.forEach((i) => {
-            const hindex: number = h.map((x) => x.k_ora).indexOf(i.k_ora);
-            if (hivasdarab[h[hindex].k_ora] === undefined) {
+             const hindex: number = h.map((x) => x.k_ora).indexOf(i.k_ora);
+             if (max[0]==0){ 
+                 max[0] = mpbe(h[hindex].v_ora, h[hindex].v_perc, h[hindex].v_mperc) - mpbe(h[hindex].k_ora, h[hindex].k_perc, h[hindex].k_mperc);
+             } else {
+                kul = mpbe(h[hindex].v_ora, h[hindex].v_perc, h[hindex].v_mperc) - mpbe(h[hindex].k_ora, h[hindex].k_perc, h[hindex].k_mperc);
+                if (kul > max[0]) { 
+                    max[0] = kul;
+                    max[1]= hindex;
+                }
+             }
+             if(hivasdarab[h[hindex].k_ora] === undefined) {
                hivasdarab[h[hindex].k_ora] = 1 ;
             }else{
                 hivasdarab[h[hindex].k_ora]++;
@@ -32,6 +43,7 @@ export class Content {
                  res.write(`<p>${i} => ${hivasdarab[i]}</p>`);
              }
          }
+         res.write(`<p>A ${max[1]}. hívás volt a leghosszabb: ${max[0]} mp</p>`);
         res.end();
     }
 }
