@@ -40,7 +40,7 @@ export class Content {
         });
          for (let i = 0; i < 24; i++) { 
              if (hivasdarab[i] !== undefined) {
-                 res.write(`<p>${i} => ${hivasdarab[i]}</p>`);
+                 res.write(`<p>${i} óra ${hivasdarab[i]} hívás</p>`);
              }
          }
          res.write(`<p>A ${max[1]}. hívás volt a leghosszabb: ${max[0]} mp</p>`);
