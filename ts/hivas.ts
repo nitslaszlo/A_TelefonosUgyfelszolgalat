@@ -6,8 +6,9 @@ export class Hivas {
    v_ora: number;
    v_perc: number;
    v_mperc: number;
-
+   azon: string;
    constructor(sor: string) {
+      this.azon = sor;
       const m: string[] = sor.split(" ");
       this.k_ora = parseInt(m[0]);
       this.k_perc = parseInt(m[1]);
@@ -17,10 +18,16 @@ export class Hivas {
       this.v_mperc = parseInt(m[5]);
    }
    /** A hívás időtartama másodpercben. */
-   public mpbe(): number {
+   public hossz_mpbe(): number {
       const kezd: number = this.k_mperc + (this.k_perc * 60) + (this.k_ora * 60 * 60);
       const bef: number = this.v_mperc + (this.v_perc * 60) + (this.v_ora * 60 * 60);
       return bef - kezd;
+   }
+   public k_mpbe(): number {
+      return (this.k_mperc + (this.k_perc * 60) + (this.k_ora * 60 * 60));
+   }
+   public v_mpbe(): number {
+      return (this.v_mperc + (this.v_perc * 60) + (this.v_ora * 60 * 60));
    }
 }
 
