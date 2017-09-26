@@ -16,8 +16,11 @@ export class Hivas {
       this.v_perc = parseInt(m[4]);
       this.v_mperc = parseInt(m[5]);
    }
-   get ora(): number {
-      return this.k_ora;
+   /** A hívás időtartama másodpercben. */
+   public mpbe(): number {
+      const kezd: number = this.k_mperc + (this.k_perc * 60) + (this.k_ora * 60 * 60);
+      const bef: number = this.v_mperc + (this.v_perc * 60) + (this.v_ora * 60 * 60);
+      return bef - kezd;
    }
 }
 

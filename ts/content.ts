@@ -11,6 +11,8 @@ function mpbe(ora: number, perc: number, mperc: number): number {
 export class Content {
     Content(req: http.ServerRequest, res: http.ServerResponse): void {
         res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+        const query: any = url.parse(req.url, true).query;
+        const idopont: string = query.idopont === undefined ? "08 10 00" : query.idopont;
         res.write("<p>Hello TypeScript!!!</p>");
         res.write(`<p>${mpbe(1, 10, 10)}</p>`);
         const h: Hivas[] = [];
@@ -19,31 +21,36 @@ export class Content {
             if (i.length > 0) h.push(new Hivas(i));
         });
         const hivasdarab: number[] = [];
-        let max: number[] = [0,0];
-        let kul: number = 0;
+        const max: number[] = [0, 0];
          h.forEach((i) => {
              const hindex: number = h.map((x) => x.k_ora).indexOf(i.k_ora);
-             if (max[0]==0){ 
-                 max[0] = mpbe(h[hindex].v_ora, h[hindex].v_perc, h[hindex].v_mperc) - mpbe(h[hindex].k_ora, h[hindex].k_perc, h[hindex].k_mperc);
-             } else {
-                kul = mpbe(h[hindex].v_ora, h[hindex].v_perc, h[hindex].v_mperc) - mpbe(h[hindex].k_ora, h[hindex].k_perc, h[hindex].k_mperc);
-                if (kul > max[0]) { 
-                    max[0] = kul;
-                    max[1]= hindex;
-                }
+
+             if (h[max[0]].mpbe() < h[hindex].mpbe()) {
+                 max[0] = hindex;
              }
-             if(hivasdarab[h[hindex].k_ora] === undefined) {
+             if (hivasdarab[h[hindex].k_ora] === undefined) {
                hivasdarab[h[hindex].k_ora] = 1 ;
-            }else{
+            }else {
                 hivasdarab[h[hindex].k_ora]++;
             }
         });
-         for (let i = 0; i < 24; i++) { 
+         for (let i: number = 0; i < 24; i++) {
              if (hivasdarab[i] !== undefined) {
                  res.write(`<p>${i} óra ${hivasdarab[i]} hívás</p>`);
              }
          }
-         res.write(`<p>A ${max[1]}. hívás volt a leghosszabb: ${max[0]} mp</p>`);
+         res.write(`<p>A ${max[0] + 1}. hívás volt a leghosszabb: ${h[max[0]].mpbe()} mp</p>`);
+        /* res.write("<p>3. feladat: A versenyző azonosítója = <input type='text' " +
+             "name= 'idopont' style= 'font-family:Courier; font - size: inherit; " +
+             "background:LightGray;' value='" + idopont + "'><br>");
+         let tmp: Hivas;
+         const input: Hivas = new Hivas(idopont);
+         for (let i: number = 0; i < v.length; i++) {
+             if (h[i].vk === vazon) { tmp = v[i]; break; }
+         }
+
+         if (tmp === undefined) { res.write(); }
+         res.write(`${tmp.vv} (a versenyző válasza)</p>`);*/
         res.end();
     }
 }
