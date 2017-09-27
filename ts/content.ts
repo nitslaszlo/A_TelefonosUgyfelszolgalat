@@ -73,7 +73,6 @@ export class Content {
         } else {
             res.write("A várakozók száma: " + db + " a beszélő a " + (max + 1) + ". hívó.</p>");
         }  
-        
         } else {
           res.write("A megadott időérték nem megfelelő, az 5. feladat nem értékelődött ki!</p>");
         }
@@ -111,16 +110,6 @@ export class Content {
             varakozas = 0;
          }
         res.write(`Az utolsó telefonáló adatai a(z) ${utolsok[1] + 1}. sorban vannak, ${varakozas} mp-ig várt.</p> `);
-        
-        
-        
-        /*v.forEach((i) => {
-            if (i.szaunábanEltöltöttIdőMs > 0) {
-                ws.write(i.vazon + " " + i.SzaunábanEltöltöttIdő + "\r\n");
-            }
-        });
-        */
-
         res.write("</p><input type='submit' value='Frissítés'></pre></form>");
         res.end();
     }
