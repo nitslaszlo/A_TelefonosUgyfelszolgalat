@@ -1,21 +1,7 @@
 ﻿import * as http from "http";
-import * as url from "url"; // űrlapokhoz, input kiolvasás
-import * as fs from "fs"; // file-kezelés
+import * as url from "url";
+import * as fs from "fs";
 import { Hivas } from "./hivas";
-
-function del(index: number, array: number[]): number[] {
-  array[index] = undefined;
-  for (let i: number = index; i < array.length; i++){
-    array[i] = array[i + 1];
-  }
-  array[array.length - 1] = undefined;
-        return array;
-}
-function hozzaad(mit: number, mihez: number[]): number[]{
-  mihez[1] = mihez[0];
-  mihez[0] = mit;
-  return mihez;
-}
 
 export class Content {
     Content(req: http.ServerRequest, res: http.ServerResponse): void {
@@ -35,7 +21,7 @@ export class Content {
         const hivasdarab: number[] = [];
         let max: number[] = [0, 0];
          h.forEach((i) => {
-             const hindex: number = h.map((x) => x.k_ora).indexOf(i.k_ora);
+             const hindex: number = h.map((x) => x.azon).indexOf(i.azon);
              if (h[max[0]].hossz_mpbe() < h[hindex].hossz_mpbe()) {
                  max[0] = hindex;
              }
@@ -65,7 +51,6 @@ export class Content {
         }
         let folyamatban: number[] = [];
         folyamatban[0] = 0;
-                          // folyamatban
         if (input_mpbe >= 28800 && input_mpbe <= 43200) {
             let max: number = 0;
             let db: number = 0;    
@@ -82,19 +67,39 @@ export class Content {
                 db++;  
               folyamatban[folyamatban.length] = hindex;
             }
-        });
-        res.write("A várakozók száma: "+ db +" a beszélő a " + (max+1) + ". hívó.</p>");    
-        /*for (i; i < folyamatban.length; i++){
-            const hindex: number = h.map((x) => x.azon).indexOf(folyamatban[i].azon);
-            const maxindex: number = h.map((x) => x.azon).indexOf(folyamatban[max].azon);
-            if(h[hindex].v_mpben() > h[folyamatban[maxindex].v_mpben()) {
-              max = hindex;
-            }
-        }*/
+            });
+        if(db === 0){
+            res.write("Nem volt beszélő.</p>");
+        } else {
+            res.write("A várakozók száma: " + db + " a beszélő a " + (max + 1) + ". hívó.</p>");
+        }  
+        
         } else {
           res.write("A megadott időérték nem megfelelő, az 5. feladat nem értékelődött ki!</p>");
         }
-                   res.write("</p><input type='submit' value='Frissítés'></pre></form>");
+        res.write("<p>6. feladat:<br>");
+        input_mpbe = 43200;
+        let utolsok: number[] = [];
+        max = 0;
+            h.forEach((i) => {
+                const hindex: number = h.map((x) => x.azon).indexOf(i.azon);
+                if (h[hindex].k_mpbe() < 43200 && h[hindex].v_mpbe() > 28800) {
+                    if(utolsok[1] === undefined){
+                        utolsok[1] = hindex;
+                    } else {
+                        if (h[utolsok[1]].v_mpbe() <= h[hindex].v_mpbe()){
+                            utolsok[0] = utolsok[1];
+                            utolsok[1] = hindex;
+                        }
+                    }
+                }
+            });
+            let varakozas: number = h[utolsok[0]].v_mpbe() - h[utolsok[1]].k_mpbe();
+            if (((h[utolsok[0]].v_mpbe()) - (h[utolsok[1]].k_mpbe())) < 0){ 
+                varakozas = 0;
+            }
+            res.write(`Az utolsó telefonáló adatai a(z) ${utolsok[1]+1}. sorban vannak, ${varakozas} mp-ig várt.</p> `);
+        res.write("</p><input type='submit' value='Frissítés'></pre></form>");
         res.end();
     }
 }
