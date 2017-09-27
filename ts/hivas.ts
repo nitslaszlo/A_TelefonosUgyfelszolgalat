@@ -29,5 +29,11 @@ export class Hivas {
    public v_mpbe(): number {
       return (this.v_mperc + (this.v_perc * 60) + (this.v_ora * 60 * 60));
    }
+   public k(): string {
+      return (`${this.k_ora} ${this.k_perc} ${this.k_mperc}`);
+   }
+   public v(): string {
+      return (`${this.v_ora} ${this.v_perc} ${this.v_mperc}`);
+   }
 }
 

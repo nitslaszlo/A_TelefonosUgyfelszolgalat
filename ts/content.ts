@@ -81,24 +81,46 @@ export class Content {
         input_mpbe = 43200;
         let utolsok: number[] = [];
         max = 0;
-            h.forEach((i) => {
-                const hindex: number = h.map((x) => x.azon).indexOf(i.azon);
-                if (h[hindex].k_mpbe() < 43200 && h[hindex].v_mpbe() > 28800) {
-                    if(utolsok[1] === undefined){
+        const ws: fs.WriteStream = fs.createWriteStream("sikeres.txt");
+        h.forEach((i) => {
+            const hindex: number = h.map((x) => x.azon).indexOf(i.azon);
+            if (h[hindex].k_mpbe() < 43200 && h[hindex].v_mpbe() > 28800) {
+                if (utolsok[1] === undefined) {
+                    utolsok[1] = hindex;
+                    if (h[hindex].k_mpbe() < 28800){ 
+                        ws.write(`${hindex+1} 8 0 0 ${h[hindex].v()}\r\n`);
+                    }else{
+                        ws.write(`${hindex+1} ${h[hindex].azon}\r\n`);                     
+                    }
+                } else {
+                     if (h[utolsok[1]].v_mpbe() <= h[hindex].v_mpbe()){
+                        utolsok[0] = utolsok[1];
                         utolsok[1] = hindex;
-                    } else {
-                        if (h[utolsok[1]].v_mpbe() <= h[hindex].v_mpbe()){
-                            utolsok[0] = utolsok[1];
-                            utolsok[1] = hindex;
+                        if (h[utolsok[1]].k_mpbe() < h[utolsok[0]].v_mpbe()){
+                            ws.write(`${hindex+1} ${h[utolsok[0]].v()} ${h[hindex].v()}\r\n`);
+                        } else {
+                            ws.write(`${hindex+1} ${h[hindex].azon}\r\n`);
                         }
                     }
                 }
-            });
-            let varakozas: number = h[utolsok[0]].v_mpbe() - h[utolsok[1]].k_mpbe();
-            if (((h[utolsok[0]].v_mpbe()) - (h[utolsok[1]].k_mpbe())) < 0){ 
-                varakozas = 0;
             }
-            res.write(`Az utolsó telefonáló adatai a(z) ${utolsok[1]+1}. sorban vannak, ${varakozas} mp-ig várt.</p> `);
+        });
+        ws.end();
+        let varakozas: number = h[utolsok[0]].v_mpbe() - h[utolsok[1]].k_mpbe();
+        if (((h[utolsok[0]].v_mpbe()) - (h[utolsok[1]].k_mpbe())) < 0){ 
+            varakozas = 0;
+         }
+        res.write(`Az utolsó telefonáló adatai a(z) ${utolsok[1] + 1}. sorban vannak, ${varakozas} mp-ig várt.</p> `);
+        
+        
+        
+        /*v.forEach((i) => {
+            if (i.szaunábanEltöltöttIdőMs > 0) {
+                ws.write(i.vazon + " " + i.SzaunábanEltöltöttIdő + "\r\n");
+            }
+        });
+        */
+
         res.write("</p><input type='submit' value='Frissítés'></pre></form>");
         res.end();
     }
