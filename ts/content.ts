@@ -34,10 +34,10 @@ export class Content {
          for (let i: number = 0; i < 24; i++) {
              if (hivasdarab[i] !== undefined) {
                  res.write(`<br>${i} óra ${hivasdarab[i]} hívás`);
-             }
-         }
-         res.write("</p><p>4. feladat:<br>");
-         res.write(`A ${max[0] + 1}. hívás volt a leghosszabb: ${h[max[0]].hossz_mpbe()} mp</p>`);
+            }
+        }
+        res.write("</p><p>4. feladat:<br>");
+        res.write(`A ${max[0] + 1}. hívás volt a leghosszabb: ${h[max[0]].hossz_mpbe()} mp</p>`);
         res.write("<p>5. feladat: Kérek egy időpontot (ó p mp) = <input type='text' " +
              "name= 'idopont' style= 'font-family:Courier; font - size: inherit; " +
              "background:LightGray;' value='" + idopont + "'><br>");
