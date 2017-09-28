@@ -53,7 +53,7 @@ export class Content {
         folyamatban[0] = 0;
         if (input_mpbe >= 28800 && input_mpbe <= 43200) {
             let max: number = 0;
-            let db: number = 0;    
+            let db: number = 0;
         h.forEach((i) => {
             const hindex: number = h.map((x) => x.azon).indexOf(i.azon);
             if (h[hindex].v_mpbe() > input_mpbe && h[hindex].k_mpbe() < input_mpbe) {
@@ -64,7 +64,7 @@ export class Content {
                     max = hindex;
                   }
                 }
-                db++;  
+                db++;
               folyamatban[folyamatban.length] = hindex;
             }
             });
@@ -72,7 +72,7 @@ export class Content {
             res.write("Nem volt beszélő.</p>");
         } else {
             res.write("A várakozók száma: " + db + " a beszélő a " + (max + 1) + ". hívó.</p>");
-        }  
+        }
         } else {
           res.write("A megadott időérték nem megfelelő, az 5. feladat nem értékelődött ki!</p>");
         }
@@ -86,10 +86,10 @@ export class Content {
             if (h[hindex].k_mpbe() < 43200 && h[hindex].v_mpbe() > 28800) {
                 if (utolsok[1] === undefined) {
                     utolsok[1] = hindex;
-                    if (h[hindex].k_mpbe() < 28800){ 
+                    if (h[hindex].k_mpbe() < 28800){
                         ws.write(`${hindex+1} 8 0 0 ${h[hindex].v()}\r\n`);
                     }else{
-                        ws.write(`${hindex+1} ${h[hindex].azon}\r\n`);                     
+                        ws.write(`${hindex+1} ${h[hindex].azon}\r\n`);
                     }
                 } else {
                      if (h[utolsok[1]].v_mpbe() <= h[hindex].v_mpbe()){
@@ -106,7 +106,7 @@ export class Content {
         });
         ws.end();
         let varakozas: number = h[utolsok[0]].v_mpbe() - h[utolsok[1]].k_mpbe();
-        if (((h[utolsok[0]].v_mpbe()) - (h[utolsok[1]].k_mpbe())) < 0){ 
+        if (((h[utolsok[0]].v_mpbe()) - (h[utolsok[1]].k_mpbe())) < 0){
             varakozas = 0;
          }
         res.write(`Az utolsó telefonáló adatai a(z) ${utolsok[1] + 1}. sorban vannak, ${varakozas} mp-ig várt.</p> `);
