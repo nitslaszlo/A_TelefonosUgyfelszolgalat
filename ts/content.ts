@@ -25,10 +25,10 @@ export class Content {
              if (h[max[0]].hossz_mpbe() < h[hindex].hossz_mpbe()) {
                  max[0] = hindex;
              }
-             if (hivasdarab[h[hindex].k_ora] === undefined) {
-               hivasdarab[h[hindex].k_ora] = 1 ;
+             if (hivasdarab[h[hindex].startOra] === undefined) {
+               hivasdarab[h[hindex].startOra] = 1 ;
             }else {
-                hivasdarab[h[hindex].k_ora]++;
+                hivasdarab[h[hindex].startOra]++;
             }
         });
          for (let i: number = 0; i < 24; i++) {
@@ -56,11 +56,11 @@ export class Content {
             let db: number = 0;
         h.forEach((i) => {
             const hindex: number = h.map((x) => x.azon).indexOf(i.azon);
-            if (h[hindex].v_mpbe() > input_mpbe && h[hindex].k_mpbe() < input_mpbe) {
+            if (h[hindex].endSecbe() > input_mpbe && h[hindex].startSecbe() < input_mpbe) {
                 if (max === 0) {
                   max = hindex;
               } else {
-                  if(h[hindex].v_mpbe() > h[max].v_mpbe()){
+                  if(h[hindex].endSecbe() > h[max].endSecbe()){
                     max = hindex;
                   }
                 }
@@ -83,20 +83,20 @@ export class Content {
         const ws: fs.WriteStream = fs.createWriteStream("sikeres.txt");
         h.forEach((i) => {
             const hindex: number = h.map((x) => x.azon).indexOf(i.azon);
-            if (h[hindex].k_mpbe() < 43200 && h[hindex].v_mpbe() > 28800) {
+            if (h[hindex].startSecbe() < 43200 && h[hindex].endSecbe() > 28800) {
                 if (utolsok[1] === undefined) {
                     utolsok[1] = hindex;
-                    if (h[hindex].k_mpbe() < 28800){
-                        ws.write(`${hindex+1} 8 0 0 ${h[hindex].v()}\r\n`);
+                    if (h[hindex].startSecbe() < 28800){
+                        ws.write(`${hindex+1} 8 0 0 ${h[hindex].end()}\r\n`);
                     }else{
                         ws.write(`${hindex+1} ${h[hindex].azon}\r\n`);
                     }
                 } else {
-                     if (h[utolsok[1]].v_mpbe() <= h[hindex].v_mpbe()){
+                     if (h[utolsok[1]].endSecbe() <= h[hindex].endSecbe()){
                         utolsok[0] = utolsok[1];
                         utolsok[1] = hindex;
-                        if (h[utolsok[1]].k_mpbe() < h[utolsok[0]].v_mpbe()){
-                            ws.write(`${hindex+1} ${h[utolsok[0]].v()} ${h[hindex].v()}\r\n`);
+                        if (h[utolsok[1]].startSecbe() < h[utolsok[0]].endSecbe()){
+                            ws.write(`${hindex+1} ${h[utolsok[0]].end()} ${h[hindex].end()}\r\n`);
                         } else {
                             ws.write(`${hindex+1} ${h[hindex].azon}\r\n`);
                         }
@@ -105,8 +105,8 @@ export class Content {
             }
         });
         ws.end();
-        let varakozas: number = h[utolsok[0]].v_mpbe() - h[utolsok[1]].k_mpbe();
-        if (((h[utolsok[0]].v_mpbe()) - (h[utolsok[1]].k_mpbe())) < 0){
+        let varakozas: number = h[utolsok[0]].endSecbe() - h[utolsok[1]].startSecbe();
+        if (((h[utolsok[0]].endSecbe()) - (h[utolsok[1]].startSecbe())) < 0){
             varakozas = 0;
          }
         res.write(`Az utolsó telefonáló adatai a(z) ${utolsok[1] + 1}. sorban vannak, ${varakozas} mp-ig várt.</p> `);

@@ -1,39 +1,39 @@
 export class Hivas {
 
-   k_ora: number;
-   k_perc: number;
-   k_mperc: number;
-   v_ora: number;
-   v_perc: number;
-   v_mperc: number;
+   startOra: number;
+   startMin: number;
+   startSec: number;
+   endOra: number;
+   endMin: number;
+   endSec: number;
    azon: string;
    constructor(sor: string) {
       this.azon = sor;
       const m: string[] = sor.split(" ");
-      this.k_ora = parseInt(m[0]);
-      this.k_perc = parseInt(m[1]);
-      this.k_mperc = parseInt(m[2]);
-      this.v_ora = parseInt(m[3]);
-      this.v_perc = parseInt(m[4]);
-      this.v_mperc = parseInt(m[5]);
+      this.startOra = parseInt(m[0]);
+      this.startMin = parseInt(m[1]);
+      this.startSec = parseInt(m[2]);
+      this.endOra = parseInt(m[3]);
+      this.endMin = parseInt(m[4]);
+      this.endSec = parseInt(m[5]);
    }
    /** A hívás időtartama másodpercben. */
    public hossz_mpbe(): number {
-      const kezd: number = this.k_mperc + (this.k_perc * 60) + (this.k_ora * 60 * 60);
-      const bef: number = this.v_mperc + (this.v_perc * 60) + (this.v_ora * 60 * 60);
+      const kezd: number = this.startSec + (this.startMin * 60) + (this.startOra * 3600);
+      const bef: number = this.endSec + (this.endMin * 60) + (this.endOra * 3600);
       return bef - kezd;
    }
-   public k_mpbe(): number {
-      return (this.k_mperc + (this.k_perc * 60) + (this.k_ora * 60 * 60));
+   public startSecbe(): number {
+      return (this.startSec + (this.startMin * 60) + (this.startOra * 3600));
    }
-   public v_mpbe(): number {
-      return (this.v_mperc + (this.v_perc * 60) + (this.v_ora * 60 * 60));
+   public endSecbe(): number {
+      return (this.endSec + (this.endMin * 60) + (this.endOra * 3600));
    }
-   public k(): string {
-      return (`${this.k_ora} ${this.k_perc} ${this.k_mperc}`);
+   public start(): string {
+      return (`${this.startOra} ${this.startMin} ${this.startSec}`);
    }
-   public v(): string {
-      return (`${this.v_ora} ${this.v_perc} ${this.v_mperc}`);
+   public end(): string {
+      return (`${this.endOra} ${this.endMin} ${this.endSec}`);
    }
 }
 
