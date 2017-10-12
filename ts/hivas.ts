@@ -18,7 +18,7 @@ export class Hivas {
       this.endSec = parseInt(m[5]);
    }
    /** A hívás időtartama másodpercben. */
-   public hossz_mpbe(): number {
+   public hosszMpbe(): number {
       const kezd: number = this.startSec + (this.startMin * 60) + (this.startOra * 3600);
       const bef: number = this.endSec + (this.endMin * 60) + (this.endOra * 3600);
       return bef - kezd;

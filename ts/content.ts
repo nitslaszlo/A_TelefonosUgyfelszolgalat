@@ -24,7 +24,7 @@ export class Content {
         const max: number[] = [0, 0];
          h.forEach((i) => {
              const hindex: number = h.map((x) => x.azon).indexOf(i.azon);
-             if (h[max[0]].hossz_mpbe() < h[hindex].hossz_mpbe()) {
+             if (h[max[0]].hosszMpbe() < h[hindex].hosszMpbe()) {
                  max[0] = hindex;
              }
              if (hivasdarab[h[hindex].startOra] === undefined) {
@@ -40,7 +40,7 @@ export class Content {
          }
 
         res.write("</p><p>4. feladat:<br>");
-        res.write(`A ${max[0] + 1}. hívás volt a leghosszabb: ${h[max[0]].hossz_mpbe()} mp</p>`);
+        res.write(`A ${max[0] + 1}. hívás volt a leghosszabb: ${h[max[0]].hosszMpbe()} mp</p>`);
 
         res.write("<p>5. feladat: Kérek egy időpontot (ó p mp) = <input type='text' " +
              "name= 'idopont' style= 'font-family:Courier; font - size: inherit; " +
